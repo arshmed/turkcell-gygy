@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: library-management
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library
+    username: admin
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+security:
+  jwt:
+    secret: a+mn3JdYxP2wsBITgnpIOA9zEag8EUPE022WDSwDcpPzvgdWGXb6hbskhyKK6wY1
+    expirationInSeconds: 360000
+    issuer: library-management
