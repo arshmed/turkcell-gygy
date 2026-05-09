@@ -2,9 +2,9 @@ spring:
   application:
     name: spring-cqrs
   datasource:
-        url: jdbc:postgresql://localhost:5432/eticaret
+        url: jdbc:postgresql://localhost:5432/ecommerce
         username: admin
-        password: admin
+        password: password
         driver-class-name: org.postgresql.Driver
   jpa:
         hibernate:
