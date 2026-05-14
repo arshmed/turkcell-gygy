@@ -9,6 +9,7 @@ import javax.crypto.SecretKey;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -26,17 +27,25 @@ public class JwtService {
         this.signingKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generate(UUID userId, String email)
+    public String generate(UUID userId, String email, String role)
     {
         Instant now = Instant.now();
         return Jwts.builder()
                    .issuer(this.jwtProperties.getIssuer())
                    .subject(userId.toString())
                    .claim("email", email)
-                   .claim("deneme", "deneme")
+                   .claim("role", role)
                    .issuedAt(Date.from(now))
                    .expiration(Date.from(now.plusSeconds(this.jwtProperties.getExpirationInSeconds())))
                    .signWith(this.signingKey)
                    .compact();
-    } 
+    }
+
+    public Claims validateToken(String token) {
+        return Jwts.parser()
+                   .verifyWith(this.signingKey)
+                   .build()
+                   .parseSignedClaims(token)
+                   .getPayload();
+    }
 }

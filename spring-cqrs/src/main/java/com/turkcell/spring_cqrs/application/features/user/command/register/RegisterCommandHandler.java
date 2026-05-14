@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.turkcell.spring_cqrs.application.features.user.rule.UserBusinessRules;
 import com.turkcell.spring_cqrs.core.mediator.cqrs.CommandHandler;
+import com.turkcell.spring_cqrs.domain.Role;
 import com.turkcell.spring_cqrs.domain.User;
 import com.turkcell.spring_cqrs.persistence.repository.UserRepository;
 
@@ -33,6 +34,7 @@ public class RegisterCommandHandler implements CommandHandler<RegisterCommand, R
         User user = new User();
         user.setEmail(command.email());
         user.setPassword(passwordEncoder.encode(command.password()));
+        user.setRole(Role.USER);
 
         userRepository.save(user);
         
